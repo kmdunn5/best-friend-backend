@@ -1,6 +1,6 @@
-package org.bestfriends.bestfriendsapi.web.controllers;
+package org.bestfriends.bestfriendsapi.ti4.web.controllers;
 
-import org.bestfriends.bestfriendsapi.web.models.Unit;
+import org.bestfriends.bestfriendsapi.ti4.web.models.UnitDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TI4Controller {
 
   @GetMapping("/units")
-  public ResponseEntity<Unit> getUnits() {
-    return ResponseEntity.ok(new Unit());
+  public ResponseEntity<UnitDTO> getUnits() {
+    return ResponseEntity.ok(new UnitDTO());
   }
 
   @GetMapping("/units/{id}")
