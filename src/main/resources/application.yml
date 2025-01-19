@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: Best Friends API
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

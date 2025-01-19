@@ -1,4 +1,4 @@
-package org.bestfriends.best_friends_api;
+package org.bestfriends.bestfriendsapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
