@@ -13,6 +13,7 @@ public class TI4Controller {
 
   @GetMapping("/units")
   public ResponseEntity<UnitDTO> getUnits() {
+    // EntityModel.of();
     return ResponseEntity.ok(new UnitDTO());
   }
 
