@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.bestfriends.bestfriendsapi.ti4.contexts.enums.UnitEnum;
 
+import com.toedter.spring.hateoas.jsonapi.JsonApiType;
+
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +19,9 @@ public class UnitDTO {
 
   @Id
   private UUID id;
+
+  @JsonApiType
+  private String type;
 
   private String name;
 

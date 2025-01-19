@@ -18,7 +18,7 @@ public class TI4Controller {
 
   @GetMapping("/units")
   public ResponseEntity<EntityModel<UnitDTO>> getUnits() {
-    UnitDTO unit = new UnitDTO(UUID.randomUUID(), "Unit Carrier", Optional.empty(), UnitEnum.CARRIER);
+    UnitDTO unit = new UnitDTO(UUID.randomUUID(), "unit", "Unit Carrier", Optional.empty(), UnitEnum.CARRIER);
     EntityModel<UnitDTO> model = EntityModel
         .of(unit);
     return ResponseEntity.ok(model);
