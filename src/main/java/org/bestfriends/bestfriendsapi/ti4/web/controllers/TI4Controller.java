@@ -1,6 +1,11 @@
 package org.bestfriends.bestfriendsapi.ti4.web.controllers;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import org.bestfriends.bestfriendsapi.ti4.contexts.enums.UnitEnum;
 import org.bestfriends.bestfriendsapi.ti4.web.models.UnitDTO;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TI4Controller {
 
   @GetMapping("/units")
-  public ResponseEntity<UnitDTO> getUnits() {
-    // EntityModel.of();
-    return ResponseEntity.ok(new UnitDTO());
+  public ResponseEntity<EntityModel<UnitDTO>> getUnits() {
+    UnitDTO unit = new UnitDTO(UUID.randomUUID(), "Unit Carrier", Optional.empty(), UnitEnum.CARRIER);
+    EntityModel<UnitDTO> model = EntityModel
+        .of(unit);
+    return ResponseEntity.ok(model);
   }
 
   @GetMapping("/units/{id}")
