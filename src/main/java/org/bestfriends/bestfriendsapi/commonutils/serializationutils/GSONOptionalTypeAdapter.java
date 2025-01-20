@@ -1,4 +1,4 @@
-package org.bestfriends.bestfriendsapi.commonutils.typeadapters;
+package org.bestfriends.bestfriendsapi.commonutils.serializationutils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -11,7 +11,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-public class OptionalTypeAdapter<E> implements JsonSerializer<Optional<E>>, JsonDeserializer<Optional<E>> {
+public class GSONOptionalTypeAdapter<E> implements JsonSerializer<Optional<E>>, JsonDeserializer<Optional<E>> {
   @Override
   public Optional<E> deserialize(JsonElement jsonElement, Type typeOf, JsonDeserializationContext context)
       throws JsonParseException {

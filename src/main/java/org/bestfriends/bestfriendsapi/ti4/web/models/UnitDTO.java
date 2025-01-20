@@ -1,10 +1,10 @@
 package org.bestfriends.bestfriendsapi.ti4.web.models;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.bestfriends.bestfriendsapi.ti4.contexts.enums.UnitEnum;
 
+import com.toedter.spring.hateoas.jsonapi.JsonApiId;
 import com.toedter.spring.hateoas.jsonapi.JsonApiType;
 
 import jakarta.persistence.Id;
@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 public class UnitDTO {
 
   @Id
+  @JsonApiId
   private UUID id;
 
   @JsonApiType
@@ -25,7 +26,7 @@ public class UnitDTO {
 
   private String name;
 
-  private Optional<UUID> factionId;
+  private UUID factionId;
 
   private UnitEnum slug;
 
