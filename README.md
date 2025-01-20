@@ -10,3 +10,5 @@ Personal site backend for Will and Kenny
 * Ability to add unrelated funtionality for whatever
 * Build this in Railway
   
+
+Here are some changes to the readme
