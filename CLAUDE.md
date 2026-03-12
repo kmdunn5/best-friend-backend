@@ -11,13 +11,14 @@ Personal website and API backend for Will and Kenny. Currently in early developm
 - **Java 25** with **Spring Boot 3.5**
 - **Maven** build system with Maven Wrapper
 - **PostgreSQL** for production database (currently H2 in-memory for dev)
-- **React** frontend (to be added)
+- **React 19** frontend with **TypeScript**, **Vite**, **MUI**, and **React Bootstrap**
 - **Spring HATEOAS** with **JSON:API** specification for REST endpoints
 - **Lombok** for boilerplate reduction
 - **Gson** and **Jackson** for serialization
 
 ## Build & Run Commands
 
+### Backend
 ```bash
 ./mvnw spring-boot:run          # Run the application
 ./mvnw test                     # Run all tests
@@ -25,6 +26,16 @@ Personal website and API backend for Will and Kenny. Currently in early developm
 ./mvnw test -Dtest=ClassName#methodName  # Run a single test method
 ./mvnw clean package            # Build JAR
 ./mvnw clean package -DskipTests # Build JAR without tests
+```
+
+### Frontend
+```bash
+cd frontend
+npm install                     # Install dependencies
+npm run dev                     # Dev server on port 3000
+npm run build                   # Production build
+npm run preview                 # Preview production build
+npx tsc --noEmit                # Type-check without emitting
 ```
 
 ## Architecture
@@ -55,6 +66,23 @@ Features are organized by domain (e.g., `ti4/` for Twilight Imperium 4). Each fe
 - DataSource autoconfiguration is currently excluded in `application.yml`
 - H2 console is enabled at default path for development
 - `schema.sql` and `data.sql` are empty
+
+## Frontend Architecture
+
+The frontend lives in `frontend/` at the project root (monorepo approach).
+
+### Directory Structure
+```
+frontend/src/
+  components/     # Shared/reusable components
+  features/       # Feature directories (mirrors backend domains)
+  theme/          # MUI theme configuration
+```
+
+### Key Patterns
+- **Vite** dev server on port 3000 with proxy: `/api/*` → `http://localhost:8080/*` (strips `/api` prefix)
+- **MUI + Bootstrap coexistence**: Bootstrap CSS is imported first in `main.tsx`; MUI Emotion styles inject at runtime with higher specificity. Use MUI components by default; alias Bootstrap imports (e.g., `Button as BsButton`)
+- **React Router** for client-side routing via `BrowserRouter`
 
 ## Code Owners
 @ChuckBTaylor and @kmdunn5

@@ -32,5 +32,11 @@ build/
 ### VS Code ###
 .vscode/
 
+### Node / Frontend ###
+node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
 ### Local Files ###
 best-friends-api.zip
