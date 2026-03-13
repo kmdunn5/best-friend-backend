@@ -10,7 +10,8 @@ Personal website and API backend for Will and Kenny. Currently in early developm
 
 - **Java 25** with **Spring Boot 3.5**
 - **Maven** build system with Maven Wrapper
-- **PostgreSQL** for production database (currently H2 in-memory for dev)
+- **PostgreSQL** for database (local via Docker, H2 for tests only)
+- **Flyway** for database migrations
 - **React 19** frontend with **TypeScript**, **Vite**, **MUI**, and **React Bootstrap**
 - **Spring HATEOAS** with **JSON:API** specification for REST endpoints
 - **Lombok** for boilerplate reduction
@@ -18,9 +19,16 @@ Personal website and API backend for Will and Kenny. Currently in early developm
 
 ## Build & Run Commands
 
+### Local Database Setup
+```bash
+docker compose up -d            # Start PostgreSQL (first time or after restart)
+docker compose down             # Stop PostgreSQL (data persists in named volume)
+docker compose down -v          # Stop and wipe all data
+```
+
 ### Backend
 ```bash
-./mvnw spring-boot:run          # Run the application
+./mvnw spring-boot:run          # Run the application (requires PostgreSQL running)
 ./mvnw test                     # Run all tests
 ./mvnw test -Dtest=ClassName    # Run a single test class
 ./mvnw test -Dtest=ClassName#methodName  # Run a single test method
@@ -59,13 +67,16 @@ Features are organized by domain (e.g., `ti4/` for Twilight Imperium 4). Each fe
 ### Key Patterns
 - **JSON:API format**: Controllers return `EntityModel<T>` or `PagedModel<EntityModel<T>>` using Spring HATEOAS with the `jsonapi` media type
 - **DAO/DTO separation**: JPA entities (DAO suffix) are separate from API response models (DTO suffix)
-- **Configuration**: `application.yml` in `src/main/resources/`; database schema/data scripts in `schema.sql` and `data.sql`
+- **Configuration**: `application.yml` in `src/main/resources/`
+- **Database migrations**: Flyway SQL migrations in `src/main/resources/db/migration/` (naming: `V{n}__{description}.sql`). Hibernate `ddl-auto: validate` ensures entities match the schema.
+
+### Database & Profiles
+- **Default profile** (local dev): PostgreSQL via Docker Compose on `localhost:5432/bestfriends`
+- **Prod profile** (`application-prod.yml`): datasource from env vars `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`
+- **Tests**: H2 in-memory (`src/test/resources/application.yml`), Flyway disabled, `ddl-auto: create-drop`
 
 ### Current State
 - The TI4 units controller (`/ti4/units`) returns hardcoded data — no repository layer is wired up yet
-- DataSource autoconfiguration is currently excluded in `application.yml`
-- H2 console is enabled at default path for development
-- `schema.sql` and `data.sql` are empty
 
 ## Frontend Architecture
 

@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: bestfriends-postgres
+    environment:
+      POSTGRES_DB: bestfriends
+      POSTGRES_USER: bestfriends
+      POSTGRES_PASSWORD: bestfriends
+    ports:
+      - "5432:5432"
+    volumes:
+      - bestfriends-data:/var/lib/postgresql/data
+
+volumes:
+  bestfriends-data:
