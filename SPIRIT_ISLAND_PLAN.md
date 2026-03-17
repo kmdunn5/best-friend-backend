@@ -223,13 +223,30 @@ The stats endpoints compute aggregates from `si_game`, `si_game_spirit`, and `si
 
 ---
 
-## Phase 4: Frontend — Reference Pages
+## Phase 4: Frontend — Reference Pages (DONE)
 
 All Spirit Island frontend code lives in `frontend/src/features/spiritisland/`.
 
+**Status:** All pages built, TypeScript compiles cleanly, production build passes.
+- [x] `types.ts` — all interfaces + element color/icon maps + helper constants
+- [x] `api.ts` — full API client with JSON:API unwrapping (spirits, adversaries, powers, games, stats)
+- [x] `siTheme.ts` — nature/mystical color palette (forest greens, golds, spirit purples, parchment backgrounds)
+- [x] `SpiritIslandLayout.tsx` — shared layout with gradient header + sticky tab navigation
+- [x] `ElementChips.tsx` — reusable element badge component with per-element colors
+- [x] `SpiritList.tsx` — card grid with complexity badges, element chips, hover effects
+- [x] `SpiritDetail.tsx` — hero section + unique power cards table with speed/cost/element chips
+- [x] `AdversaryList.tsx` — cards with dark red headers, difficulty range, level count
+- [x] `AdversaryDetail.tsx` — hero + level cards with color-coded difficulty borders
+- [x] `PowerCardBrowser.tsx` — searchable, filterable (type/speed) card grid
+- [x] `GameLog.tsx` — sortable game table with result chips, spirit/player columns, fake data indicator
+- [x] `GameForm.tsx` — multi-section form (setup, result, spirits with stats, notes)
+- [x] `GameDetail.tsx` — result hero + per-spirit stat grids
+- [x] `StatsOverview.tsx` — overview metrics + spirit/adversary tables with win-rate bars + matchup table + fake data toggle
+- [x] Routes added to `App.tsx` (10 routes)
+
 ### Design Direction
 
-The Super Bowl feature uses a party/game show aesthetic. Spirit Island should have a **nature/mystical** feel — earthy tones, deep greens, purples, and golds. Think parchment textures, organic shapes, and elemental iconography. Use MUI components styled with a distinct sub-theme.
+The Super Bowl feature uses a party/game show aesthetic. Spirit Island has a **nature/mystical** feel — earthy forest greens, spirit purples, gold accents, and parchment backgrounds. Distinct sub-theme via `siTheme.ts`.
 
 ### Pages & Components
 
@@ -275,9 +292,9 @@ frontend/src/features/spiritisland/
 
 ---
 
-## Phase 5: Frontend — Game Logger
+## Phase 5: Frontend — Game Logger (DONE)
 
-The game logging form is the most complex UI piece. Build it as a multi-step wizard.
+Built as a single-page form with sections (simpler than a multi-step wizard, same UX coverage).
 
 ### Step 1: Game Setup
 - Number of players (1-4)
@@ -305,7 +322,9 @@ The game logging form is the most complex UI piece. Build it as a multi-step wiz
 
 ---
 
-## Phase 6: Frontend — Stats Dashboard
+## Phase 6: Frontend — Stats Dashboard (DONE)
+
+All stats consolidated into a single `StatsOverview.tsx` page with sections. Charts deferred to future iteration.
 
 ### Overview Dashboard
 - Total games played, overall win rate
