@@ -3,6 +3,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Button as BsButton } from 'react-bootstrap';
+import SuperBowlGuessing from './features/superbowl/SuperBowlGuessing';
+import AdminPanel from './features/superbowl/AdminPanel';
 
 function Home() {
   return (
@@ -25,6 +27,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/superbowl" element={<SuperBowlGuessing />} />
+      <Route path="/superbowl/admin" element={<AdminPanel />} />
     </Routes>
   );
 }

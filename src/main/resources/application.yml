@@ -8,8 +8,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  jackson:
+    mapper:
+      require-handlers-for-java8-times: false
   flyway:
     locations: classpath:db/migration
+
+bestfriends:
+  admin-secret: local-dev-secret
 
 logging:
   level:
