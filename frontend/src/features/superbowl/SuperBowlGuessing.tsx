@@ -4,11 +4,20 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Chip from '@mui/material/Chip';
 import { fetchCurrentGame } from './api';
 import type { Game, Guess } from './types';
 import GuessForm from './GuessForm';
 import GuessList from './GuessList';
 import WinnerBanner from './WinnerBanner';
+
+const statusChipProps: Record<string, { label: string; color: 'success' | 'default' | 'warning' | 'secondary' }> = {
+  OPEN: { label: 'Guessing Open', color: 'success' },
+  CLOSED: { label: 'Guessing Closed', color: 'default' },
+  LOCKED: { label: 'Locked In', color: 'warning' },
+  REVEALED: { label: 'Winner Revealed', color: 'secondary' },
+};
 
 export default function SuperBowlGuessing() {
   const [game, setGame] = useState<Game | null>(null);
@@ -67,53 +76,108 @@ export default function SuperBowlGuessing() {
   if (!game) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Typography variant="h4">Super Bowl Commercial Guessing</Typography>
-        <Typography color="text.secondary" sx={{ mt: 2 }}>No game available yet.</Typography>
+        <Box
+          sx={{
+            background: 'linear-gradient(135deg, #1a237e, #534bae)',
+            borderRadius: 3,
+            p: { xs: 3, sm: 5 },
+            mb: 3,
+            textAlign: 'center',
+          }}
+        >
+          <Typography variant="h4" sx={{ color: '#fff' }}>
+            Super Bowl Commercial Guessing
+          </Typography>
+        </Box>
+        <Typography color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
+          No game available yet.
+        </Typography>
       </Container>
     );
   }
 
+  const chip = statusChipProps[game.status];
+
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Super Bowl {game.year} Commercial Guessing
-      </Typography>
+    <Container maxWidth="md" sx={{ mt: { xs: 2, sm: 4 }, px: { xs: 2, sm: 3 } }}>
+      <Box
+        sx={{
+          background: 'linear-gradient(135deg, #1a237e, #534bae)',
+          borderRadius: 3,
+          p: { xs: 3, sm: 5 },
+          mb: 3,
+          textAlign: 'center',
+        }}
+      >
+        <Typography variant="h4" sx={{ color: '#fff', mb: 1 }}>
+          Super Bowl {game.year} Commercial Guessing
+        </Typography>
+        <Typography variant="subtitle1" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+          Who will predict the first commercial?
+        </Typography>
+      </Box>
+
+      {chip && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+          <Chip label={chip.label} color={chip.color} />
+        </Box>
+      )}
 
       {game.status === 'CLOSED' && (
-        <Box>
-          <Alert severity="info">Guessing is not open yet.</Alert>
+        <Paper sx={{ p: { xs: 3, sm: 5 }, textAlign: 'center', border: '1px solid', borderColor: 'divider' }}>
+          <Typography variant="h6" gutterBottom>
+            Guessing is not open yet
+          </Typography>
           {game.guessingOpensAt && (
-            <Typography color="text.secondary" sx={{ mt: 1 }}>
+            <Typography color="text.secondary">
               Opens at: {new Date(game.guessingOpensAt).toLocaleString()}
             </Typography>
           )}
-        </Box>
+        </Paper>
       )}
 
       {game.status === 'OPEN' && (
         <Box>
           {alreadyGuessed ? (
-            <Alert severity="success" sx={{ mb: 2 }}>
+            <Alert variant="filled" severity="success" sx={{ mb: 3 }}>
               Your guess has been submitted!
             </Alert>
           ) : (
             <GuessForm gameId={game.id} onGuessSubmitted={handleGuessSubmitted} />
           )}
-          <GuessList guesses={game.guesses} />
+          <Paper sx={{ p: { xs: 2, sm: 3 }, border: '1px solid', borderColor: 'divider' }}>
+            <GuessList guesses={game.guesses} />
+          </Paper>
         </Box>
       )}
 
       {game.status === 'LOCKED' && (
         <Box>
-          <Alert severity="info" sx={{ mb: 2 }}>Guessing is locked. Waiting for the big reveal!</Alert>
-          <GuessList guesses={game.guesses} />
+          <Paper
+            sx={{
+              p: { xs: 3, sm: 4 },
+              mb: 3,
+              textAlign: 'center',
+              border: '2px solid',
+              borderColor: 'secondary.main',
+            }}
+          >
+            <Typography variant="h6" sx={{ color: 'secondary.dark' }}>
+              Guessing is locked — waiting for kickoff!
+            </Typography>
+          </Paper>
+          <Paper sx={{ p: { xs: 2, sm: 3 }, border: '1px solid', borderColor: 'divider' }}>
+            <GuessList guesses={game.guesses} />
+          </Paper>
         </Box>
       )}
 
       {game.status === 'REVEALED' && (
         <Box>
           <WinnerBanner winningCategory={game.winningCategory!} guesses={game.guesses} />
-          <GuessList guesses={game.guesses} winningCategory={game.winningCategory} />
+          <Paper sx={{ p: { xs: 2, sm: 3 }, border: '1px solid', borderColor: 'divider' }}>
+            <GuessList guesses={game.guesses} winningCategory={game.winningCategory} />
+          </Paper>
         </Box>
       )}
     </Container>

@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
-import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper';
 import {
   fetchCurrentGame,
   adminCreateGame,
@@ -73,7 +73,7 @@ export default function AdminPanel() {
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ color: 'primary.main' }}>
         Super Bowl Admin
       </Typography>
 
@@ -89,58 +89,66 @@ export default function AdminPanel() {
       {message && <Alert severity="success" sx={{ mb: 2 }}>{message}</Alert>}
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-      <Divider sx={{ mb: 3 }} />
-      <Typography variant="h6" gutterBottom>Create New Game</Typography>
-      <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
-        <TextField
-          label="Year"
-          type="number"
-          value={newYear}
-          onChange={(e) => setNewYear(Number(e.target.value))}
-        />
-        <TextField
-          label="Opens At (ISO)"
-          value={newOpensAt}
-          onChange={(e) => setNewOpensAt(e.target.value)}
-          placeholder="2026-02-08T18:00:00Z"
-        />
-        <Button variant="contained" onClick={handleCreateGame}>Create</Button>
-      </Box>
+      <Paper sx={{ p: 3, mb: 3, border: '1px solid', borderColor: 'divider' }}>
+        <Typography variant="h6" gutterBottom sx={{ color: 'primary.main' }}>
+          Create New Game
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <TextField
+            label="Year"
+            type="number"
+            value={newYear}
+            onChange={(e) => setNewYear(Number(e.target.value))}
+          />
+          <TextField
+            label="Opens At (ISO)"
+            value={newOpensAt}
+            onChange={(e) => setNewOpensAt(e.target.value)}
+            placeholder="2026-02-08T18:00:00Z"
+          />
+          <Button variant="contained" onClick={handleCreateGame}>Create</Button>
+        </Box>
+      </Paper>
 
       {game && (
         <>
-          <Divider sx={{ mb: 3 }} />
-          <Typography variant="h6" gutterBottom>
-            Current Game: {game.year} (Status: {game.status})
-          </Typography>
+          <Paper sx={{ p: 3, mb: 3, border: '1px solid', borderColor: 'divider' }}>
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.main' }}>
+              Current Game: {game.year} (Status: {game.status})
+            </Typography>
 
-          <Typography variant="subtitle2" gutterBottom>Change Status</Typography>
-          <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
-            {STATUS_ORDER.map((s) => (
-              <Button
-                key={s}
-                variant={game.status === s ? 'contained' : 'outlined'}
-                size="small"
-                onClick={() => handleStatusChange(s)}
-                disabled={game.status === s}
-              >
-                {s}
+            <Typography variant="subtitle2" gutterBottom>Change Status</Typography>
+            <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+              {STATUS_ORDER.map((s) => (
+                <Button
+                  key={s}
+                  variant={game.status === s ? 'contained' : 'outlined'}
+                  color={game.status === s ? 'secondary' : 'primary'}
+                  size="small"
+                  onClick={() => handleStatusChange(s)}
+                  disabled={game.status === s}
+                >
+                  {s}
+                </Button>
+              ))}
+            </Box>
+          </Paper>
+
+          <Paper sx={{ p: 3, mb: 3, border: '1px solid', borderColor: 'divider' }}>
+            <Typography variant="h6" gutterBottom sx={{ color: 'primary.main' }}>
+              Set Winning Category
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <TextField
+                label="Winning Category"
+                value={winnerCategory}
+                onChange={(e) => setWinnerCategory(e.target.value)}
+              />
+              <Button variant="contained" color="success" onClick={handleSetWinner}>
+                Reveal Winner
               </Button>
-            ))}
-          </Box>
-
-          <Divider sx={{ mb: 3 }} />
-          <Typography variant="subtitle2" gutterBottom>Set Winning Category</Typography>
-          <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
-            <TextField
-              label="Winning Category"
-              value={winnerCategory}
-              onChange={(e) => setWinnerCategory(e.target.value)}
-            />
-            <Button variant="contained" color="success" onClick={handleSetWinner}>
-              Reveal Winner
-            </Button>
-          </Box>
+            </Box>
+          </Paper>
         </>
       )}
     </Container>
