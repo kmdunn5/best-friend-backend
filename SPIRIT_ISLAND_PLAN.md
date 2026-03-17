@@ -12,9 +12,14 @@ This document outlines the step-by-step plan for building a Spirit Island game t
 
 ---
 
-## Phase 1: Database Schema
+## Phase 1: Database Schema (DONE)
 
 Create Flyway migrations for the Spirit Island domain tables. All tables prefixed with `si_`.
+
+**Status:** All 3 migrations created and validated against PostgreSQL.
+- [x] `V0003__create_spirit_island_reference_tables.sql` — `si_spirit`, `si_adversary`, `si_adversary_level`, `si_power_card`
+- [x] `V0004__create_spirit_island_game_tables.sql` — `si_game`, `si_game_spirit`, `si_game_power_used`
+- [x] `V0005__seed_spirit_island_base_game_data.sql` — 8 spirits, 3 adversaries (18 levels), 32 unique power cards
 
 ### Migration V0003: Static Reference Tables
 
@@ -98,9 +103,16 @@ Insert all 8 base game spirits, 3 adversaries with their 6 levels each, and all 
 
 ---
 
-## Phase 2: Backend — Domain Models & Repositories
+## Phase 2: Backend — Domain Models & Repositories (DONE)
 
 Follow the existing feature pattern: `spiritisland/contexts/` and `spiritisland/web/`.
+
+**Status:** All enums, DAOs, repositories, DTOs, request models, controllers, and integration tests created. 24/24 tests pass.
+- [x] 6 enums: `Complexity`, `CardType`, `PowerSpeed`, `GameResult`, `LossReason`, `Element`
+- [x] 7 DAO entities + 7 repositories
+- [x] 8 DTOs + 2 request models
+- [x] 4 controllers: `SiSpiritController`, `SiAdversaryController`, `SiPowerCardController`, `SiGameController`
+- [x] 3 test classes (14 tests): `SiSpiritControllerTest`, `SiAdversaryControllerTest`, `SiGameControllerTest`
 
 ### Package Structure
 

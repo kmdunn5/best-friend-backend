@@ -28,6 +28,7 @@ docker compose down -v          # Stop and wipe all data
 
 ### Backend
 ```bash
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home  # Ensure Java 25
 ./mvnw spring-boot:run          # Run the application (requires PostgreSQL running)
 ./mvnw test                     # Run all tests
 ./mvnw test -Dtest=ClassName    # Run a single test class
@@ -77,6 +78,7 @@ Features are organized by domain (e.g., `ti4/` for Twilight Imperium 4). Each fe
 
 ### Current State
 - The TI4 units controller (`/ti4/units`) returns hardcoded data — no repository layer is wired up yet
+- **Spirit Island** (`/spirit-island/*`) — game tracker with full CRUD. Reference data (spirits, adversaries, power cards) seeded via Flyway. Game logging with per-spirit stats. See `SPIRIT_ISLAND_PLAN.md` for implementation roadmap and `SPIRIT_ISLAND_REFERENCE.md` for game rules reference.
 
 ## Frontend Architecture
 
