@@ -200,17 +200,26 @@ org.bestfriends.bestfriendsapi.spiritisland/
 
 ---
 
-## Phase 3: Backend — Stats Engine
+## Phase 3: Backend — Stats Engine (DONE)
 
-The stats endpoints compute aggregates from `si_game`, `si_game_spirit`, and `si_game_power_used`. Keep it simple — use Spring Data JPA `@Query` with native SQL for aggregate queries rather than introducing a separate analytics layer.
+The stats endpoints compute aggregates from `si_game`, `si_game_spirit`, and `si_game_power_used`. Keep it simple — use in-memory Java stream aggregation from JPA entities rather than introducing a separate analytics layer.
 
-### Key Stats to Compute
+**Status:** Stats controller with 4 endpoints, `fake` column on `si_game`, 10 dummy games seeded, all tests passing (30 total).
+- [x] `V0006__add_fake_column_to_si_game.sql` — `fake BOOLEAN NOT NULL DEFAULT FALSE`
+- [x] `V0007__seed_spirit_island_dummy_games.sql` — 10 dummy games (7W/3L) across all adversaries/spirits
+- [x] `SiStatsController` with 4 endpoints, all supporting `?includeFake=true`
+- [x] 4 stats DTOs: `SiOverviewStatsDTO`, `SiSpiritStatsDTO`, `SiAdversaryStatsDTO`, `SiMatchupStatsDTO`
+- [x] `SiStatsControllerTest` — 6 tests covering all endpoints + fake filtering
+- [x] Updated `SiGameDAO`/`SiGameDTO` with `fake` field
+- [x] Game list endpoint updated with `?includeFake=false` default
 
-1. **Overall:** total games, win rate, average terror level at victory, most common loss reason
-2. **Per Spirit:** games played, win rate, avg damage/fear/cities destroyed, best adversary matchup, worst adversary matchup
-3. **Per Adversary (by level):** games played, win rate, which spirits performed best/worst
-4. **Matchup Matrix:** spirit × adversary level → win rate (only show combos with enough data)
-5. **Power Cards:** most-used cards, cards correlated with wins, cards correlated with high damage
+### Key Stats Computed
+
+1. **Overall (`/stats/overview`):** total games, win/loss count, win rate, avg terror level, avg rounds, most common loss reason
+2. **Per Spirit (`/stats/spirits`):** games played, win rate, avg damage/fear/cities/towns/explorers destroyed, avg damage prevented
+3. **Per Adversary (`/stats/adversaries`):** per-level games played, win rate, difficulty
+4. **Matchup Matrix (`/stats/matchups`):** spirit × adversary level → games played, wins, win rate
+5. **Power Cards:** deferred to future iteration (requires `si_game_power_used` data to be meaningful)
 
 ---
 

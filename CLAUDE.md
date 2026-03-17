@@ -78,7 +78,7 @@ Features are organized by domain (e.g., `ti4/` for Twilight Imperium 4). Each fe
 
 ### Current State
 - The TI4 units controller (`/ti4/units`) returns hardcoded data — no repository layer is wired up yet
-- **Spirit Island** (`/spirit-island/*`) — game tracker with full CRUD. Reference data (spirits, adversaries, power cards) seeded via Flyway. Game logging with per-spirit stats. See `SPIRIT_ISLAND_PLAN.md` for implementation roadmap and `SPIRIT_ISLAND_REFERENCE.md` for game rules reference.
+- **Spirit Island** (`/spirit-island/*`) — game tracker with full CRUD. Reference data (spirits, adversaries, power cards) seeded via Flyway. Game logging with per-spirit stats. Stats engine at `/spirit-island/stats/*` (overview, per-spirit, per-adversary, matchups). All stats/game-list endpoints support `?includeFake=true` to include test data. See `SPIRIT_ISLAND_PLAN.md` for implementation roadmap and `SPIRIT_ISLAND_REFERENCE.md` for game rules reference.
 
 ## Frontend Architecture
 

@@ -28,10 +28,16 @@ public class SiGameController {
   private final SiSpiritRepository spiritRepository;
 
   @GetMapping
-  public ResponseEntity<PagedModel<EntityModel<SiGameDTO>>> getAllGames() {
-    log.debug("Processing call to: /spirit-island/games");
+  public ResponseEntity<PagedModel<EntityModel<SiGameDTO>>> getAllGames(
+      @RequestParam(defaultValue = "false") boolean includeFake) {
+    log.debug("Processing call to: /spirit-island/games (includeFake={})", includeFake);
 
-    List<EntityModel<SiGameDTO>> games = gameRepository.findAll(Sort.by(Sort.Direction.DESC, "playedAt")).stream()
+    Sort sort = Sort.by(Sort.Direction.DESC, "playedAt");
+    List<SiGameDAO> rawGames = includeFake
+        ? gameRepository.findAll(sort)
+        : gameRepository.findByFake(false, sort);
+
+    List<EntityModel<SiGameDTO>> games = rawGames.stream()
         .map(game -> {
           SiGameDTO dto = toDTO(game);
           dto.setSpirits(getGameSpirits(game.getId()));
@@ -137,6 +143,7 @@ public class SiGameController {
     dto.setNumRounds(dao.getNumRounds());
     dto.setBoardSetup(dao.getBoardSetup());
     dto.setNotes(dao.getNotes());
+    dto.setFake(dao.getFake());
     dto.setCreatedAt(dao.getCreatedAt());
     return dto;
   }

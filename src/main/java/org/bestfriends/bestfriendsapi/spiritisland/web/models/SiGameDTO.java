@@ -42,6 +42,8 @@ public class SiGameDTO {
 
   private String notes;
 
+  private Boolean fake;
+
   private OffsetDateTime createdAt;
 
   private List<SiGameSpiritDTO> spirits;
