@@ -10,11 +10,17 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
+  jackson:
+    mapper:
+      require-handlers-for-java8-times: false
   flyway:
     enabled: false
   sql:
     init:
       mode: never
+
+bestfriends:
+  admin-secret: test-secret
 
 logging:
   level:

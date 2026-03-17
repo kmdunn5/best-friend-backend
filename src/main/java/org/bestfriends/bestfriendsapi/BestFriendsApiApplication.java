@@ -2,8 +2,10 @@ package org.bestfriends.bestfriendsapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.toedter.spring.hateoas.jsonapi.JsonApiConfiguration;
 import com.toedter.spring.hateoas.jsonapi.JsonApiObject;
 
@@ -20,7 +22,15 @@ public class BestFriendsApiApplication {
 
   @Bean
   JsonApiConfiguration jsonApiConfiguration() {
-    return new JsonApiConfiguration().withJsonApiObject(new JsonApiObject(true)).withPluralizedTypeRendered(false);
+    return new JsonApiConfiguration()
+        .withJsonApiObject(new JsonApiObject(true))
+        .withPluralizedTypeRendered(false)
+        .withObjectMapperCustomizer(objectMapper -> objectMapper.registerModule(new JavaTimeModule()));
+  }
+
+  @Bean
+  Jackson2ObjectMapperBuilderCustomizer jacksonCustomizer() {
+    return builder -> builder.modules(new JavaTimeModule());
   }
 
 }
